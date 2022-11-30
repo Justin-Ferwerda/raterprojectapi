@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from raterprojectapi.views import register_user, check_user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
