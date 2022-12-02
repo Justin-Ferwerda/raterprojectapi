@@ -1,0 +1,15 @@
+[
+  {
+    "model": "raterprojectapi.game",
+    "pk": 1,
+    "fields": {
+      "title": "Power Grid",
+      "description": "German made turn-based game where you have to build cities powered by power plants",
+      "designer": "Friedemann Friese",
+      "year_released": 2004,
+      "no_of_players": 4,
+      "time_to_play": 120,
+      "age_recommendation": 12
+    }
+  }
+]
