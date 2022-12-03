@@ -10,14 +10,19 @@ class GameReviewView(ViewSet):
   def list(self, request):
     """handles GET requests for reviews"""
     reviews = PlayerReview.objects.all()
-    serializer = ReviewCategorySerializer(reviews)
+    
+    game = request.query_params.get('game', None)
+    if game is not None:
+      reviews = reviews.filter(game=game)
+          
+    serializer = ReviewCategorySerializer(reviews, many=True)
     return Response(serializer.data)
   
   def create(self, request):
     """handles POST requests for reviews"""
     
     game = Game.objects.get(pk=request.data["game"])
-    player = Player.objects.get(uid=request.data["uid"])
+    player = Player.objects.get(uid=request.data["player"])
     
     review = PlayerReview.objects.create(
       game = game,
@@ -32,4 +37,4 @@ class ReviewCategorySerializer(serializers.ModelSerializer):
   
   class Meta:
     model = PlayerReview
-    fields = ('game', 'player', 'review')
+    fields = ('id', 'game', 'player', 'review')
