@@ -18,6 +18,7 @@ class GameView(ViewSet):
     """Handles GET requests for all games"""
     
     games = Game.objects.all()
+    
     serializer = GameSerializer(games, many=True)
     return Response(serializer.data)
     
@@ -41,6 +42,6 @@ class GameSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = Game
-    fields = ('id', 'title','description', 'designer', 'year_released', 'no_of_players', 'time_to_play', 'age_recommendation')
+    fields = ('id', 'title','description', 'designer', 'year_released', 'no_of_players', 'time_to_play', 'age_recommendation', 'average_rating')
     depth = 1
     

@@ -18,13 +18,14 @@ from django.urls import path
 from django.conf.urls import include
 from rest_framework import routers
 from raterprojectapi.views import register_user, check_user
-from raterprojectapi.views import GameView, CategoryView, GameCategoryView, GameReviewView
+from raterprojectapi.views import GameView, CategoryView, GameCategoryView, GameReviewView, GameRatingView
 
 router =  routers.DefaultRouter(trailing_slash=False)
 router.register(r'games', GameView, 'game')
 router.register(r'categories', CategoryView, 'category')
 router.register(r'gamecategories', GameCategoryView, 'gamecategory')
 router.register(r'reviews', GameReviewView, 'review')
+router.register(r'ratings', GameRatingView, 'rating')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
