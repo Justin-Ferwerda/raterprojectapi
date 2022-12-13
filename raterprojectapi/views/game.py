@@ -2,7 +2,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from raterprojectapi.models import Game
+from raterprojectapi.models import Game, Category, GameCategory
 
 
 class GameView(ViewSet):
@@ -25,15 +25,26 @@ class GameView(ViewSet):
   def create(self, request):
     """Handles POST requests for game"""
     
-    game = Game.objects.create(
-      title=request.data["title"],
-      description=request.data["description"],
-      designer=request.data["designer"],
-      year_released=request.data["year_released"],
-      no_of_players=request.data["no_of_players"],
-      time_to_play=request.data["time_to_play"],
-      age_recommendation=request.data["age_recommendation"]
-    )
+    game = Game()
+      
+    game.title=request.data["title"]
+    game.description=request.data["description"]
+    game.designer=request.data["designer"]
+    game.year_released=request.data["year_released"]
+    game.no_of_players=request.data["no_of_players"]
+    game.time_to_play=request.data["time_to_play"]
+    game.age_recommendation=request.data["age_recommendation"]
+    
+    category_ids= request.data["category_ids"]
+    
+    categories = [Category.objects.get(pk=category_id) for category_id in category_ids]
+    
+    game.save()
+    
+    for category in categories:
+      game_category = GameCategory(game=game, category=category)
+      game_category.save()
+      
     serializer = GameSerializer(game)
     return Response(serializer.data)
     
