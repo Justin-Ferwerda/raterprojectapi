@@ -20,6 +20,5 @@ class Game(models.Model):
       total_rating += rating.rating
       
     if len(ratings):
-      average_rating = total_rating/len(ratings)
-      return average_rating
+      return round(total_rating/len(ratings), 2)
     
